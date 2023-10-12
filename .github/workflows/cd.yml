@@ -35,5 +35,8 @@ jobs:
       - name: Docker build
         run: docker build -t edusig/notely:latest .
 
-      - name:
+      - name: Docker push
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-401820/notely-ar-repo/notely:latest .
+
+      - name: "Deploy to Cloud Run"
+        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-401820/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-401820 --max-instances=4
